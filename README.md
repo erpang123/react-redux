@@ -1,6 +1,6 @@
-# vue-dom
+# React-dom
 
-> A Vue.js project
+> A React.js project
 
 ## Build Setup
 
