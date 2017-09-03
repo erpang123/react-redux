@@ -2,6 +2,7 @@ import React from 'react'
 import Seller from './seller'
 import Good from './good'
 import Message from './message'
+import Dom from './dom'
 import { BrowserRouter, Route, Link, NavLink, Redirect } from 'react-router-dom'
 
 class MyComponent extends React.Component{

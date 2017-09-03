@@ -6,7 +6,8 @@ class MessageInfo extends React.Component{
 	constructor (props) {
 		super(props)
     this.state = {
-      admin_info: []
+      admin_info: [],
+      static_info: []
     }
 	}
   componentWillMount () {
@@ -44,39 +45,60 @@ class MessageInfo extends React.Component{
         }
         _this.rateTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes
       }
+      let allMath = parseInt(goodMath) + parseInt(badMath)
+      this.props.getMessage(allMath, goodMath, badMath)
       this.setState({
-        admin_info: datajson
+        admin_info: datajson,
+        static_info: datajson
       })
-      // this.$parent.li_list[0].li_math = datajson.length
-      // this.$parent.li_list[1].li_math = goodMath
-      // this.$parent.li_list[2].li_math = badMath
-      // this.admin_info = datajson
-      // this.all_info = datajson
-      // (idx, idy) => {
-      //   var goodList = []
-      //   var badList = []
-      //   if (idx === 0) {
-      //     this.admin_info = this.all_info
-      //   } else if (idx === 1) {
-      //     for (let i in this.all_info) {
-      //       if (this.all_info[i].score >= 3) {
-      //         goodList.push(this.all_info[i])
-      //       }
-      //     }
-      //     this.admin_info = goodList
-      //   } else if (idx === 2) {
-      //     for (let i in this.all_info) {
-      //       if (this.all_info[i].score < 3) {
-      //         badList.push(this.all_info[i])
-      //       }
-      //     }
-      //     this.admin_info = badList
-      //   }
-      //   this.reload_info(this.admin_info, idy)
-      // }
     }).catch((error) => {
       console.log(error)
     })
+  }
+  componentWillReceiveProps (nextProps) {
+    let goodList = []
+    let badList = []
+    let idx = nextProps.liIndex
+    let idy = nextProps.hasInfo
+    if (idx === 0) {
+      this.setState({
+        admin_info: this.state.static_info
+      })
+      this.reload_info(this.state.static_info, idy)
+    } else if (idx === 1) {
+      for (let i in this.state.static_info) {
+        if (this.state.static_info[i].score >= 3) {
+          goodList.push(this.state.static_info[i])
+        }
+      }
+      this.setState({
+        admin_info: goodList
+      })
+      this.reload_info(goodList, idy)
+    } else if (idx === 2) {
+      for (let i in this.state.static_info) {
+        if (this.state.static_info[i].score < 3) {
+          badList.push(this.state.static_info[i])
+        }
+      }
+      this.setState({
+        admin_info: badList
+      })
+      this.reload_info(badList, idy)
+    }
+  }
+  reload_info (obj, bool) {
+    let info = []
+    if (bool) {
+      for (let i in obj) {
+        if (obj[i].text !== '') {
+          info.push(obj[i])
+        }
+      }
+      this.setState({
+        admin_info: info
+      })
+    }
   }
 	render () {
 		return (

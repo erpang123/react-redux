@@ -154,6 +154,9 @@ html,body{
   padding-left: 18px;
   padding-right: 18px;
   padding-bottom: 10px;
+  max-height: 200px;
+  overflow:auto;
+  overflow-scrolling:touch;
 }
 .shop-cart ul li{
   height: 48px;

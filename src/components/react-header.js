@@ -1,9 +1,9 @@
 import React from 'react'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as AllAction from '../action/action1'
-import img_src from '../assets/shop_img.png'
 import axios from 'axios'
+
+import img_src from '../assets/shop_img.png'
+import dispatchAction from '../dispatch/dispatchAction'
 
 class ReactHeader extends React.Component{
 	constructor (Props) {
@@ -31,7 +31,7 @@ class ReactHeader extends React.Component{
   }
   getNewInfo () {
     let shopinfo = this.state.shopInfo
-    this.props.actions.setShopInfo(shopinfo)
+    this.props.action.setShopInfo(shopinfo)
   }
 	render () {
     return (
@@ -55,10 +55,4 @@ class ReactHeader extends React.Component{
 	}
 }
 
-let mapDispatchToProps = (dispatch) => {
-  return {
-    actions: bindActionCreators(AllAction, dispatch)
-  }
-}
-
-export default connect(null, mapDispatchToProps)(ReactHeader)
+export default connect(null, dispatchAction)(ReactHeader)

@@ -1,4 +1,5 @@
 import React from 'react'
+
 import ReactStar from './reactstar'
 import MessageInfo from './messageinfo'
 
@@ -30,10 +31,29 @@ class Message extends React.Component{
     })
   }
   setIndex (index) {
-    console.log(index)
     this.setState({
       select_index: index
     })
+  }
+  getMessage () {
+    return (...obj) => {
+      this.setState({
+        li_list: [
+          {
+            li_name: '全部',
+            li_math: obj[0]
+          },
+          {
+            li_name: '满意',
+            li_math: obj[1]
+          },
+          {
+            li_name: '不满意',
+            li_math: obj[2]
+          }
+        ]
+      })
+    }
   }
   render () {
     return (
@@ -66,13 +86,13 @@ class Message extends React.Component{
             {
               this.state.li_list.map((list, index) => {
                 return (
-                  <li key={index} className={this.state.select_index == index ? 'li-active' : ''} onClick={(index) => this.setIndex(index)}>{list.li_name}<small>{list.li_math}</small></li>
+                  <li key={index} className={this.state.select_index == index ? 'li-active' : ''} onClick={() => this.setIndex(index)}>{list.li_name}<small>{list.li_math}</small></li>
                 )
               })
             }
           </ul>
           <p className={this.state.all_info ? "admin-info-title success-active" : "admin-info-title"} onClick={() => this.getAllInfo()}>只看有内容的评价</p>
-          <MessageInfo></MessageInfo>
+          <MessageInfo getMessage = {this.getMessage()} liIndex = {this.state.select_index} hasInfo = {this.state.all_info}></MessageInfo>
         </div>
       </div>
     )

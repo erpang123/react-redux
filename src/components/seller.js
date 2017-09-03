@@ -1,6 +1,9 @@
 import React from 'react'
-import Food from './food'
 import axios from 'axios'
+import { connect } from 'react-redux'
+
+import dispatchAction from '../dispatch/dispatchAction'
+import Food from './food'
 
 class Index extends React.Component{
   constructor (props) {
@@ -12,20 +15,39 @@ class Index extends React.Component{
     }
   }
   componentWillMount () {
-    axios.get('/api/seller').then((res) => {
+    axios.get('/api/seller').then((res) => {//请求产品的数据列表
       let data = JSON.parse(res.data)
-      let keys = []
+      let cartlist = []
+      for (let i = 0; i < data.goods.length; i++) {
+        for (let j in data.goods[i].foods) {
+          let name = data.goods[i].foods[j].name
+          let price = data.goods[i].foods[j].price
+          let obj = {
+            name: name,
+            math: 0,
+            price: price
+          }
+          cartlist.push(obj)//将产品的名称，个数，价格存储到产品的数组列表中
+        }
+      }
+      cartlist.all_num = 0
+      cartlist.price = 0
+      this.props.action.setShopMath(cartlist)
       this.setState({
         shoplists: data.goods
       })
-      for(let i = 0; i < data.goods.length; i++){
-        keys.push(this.refs['info_index'+i].offsetTop)
-      }
-      this.setState({
-        keys: keys
-      })
     }).catch((error) => {
       console.log(error)
+    })
+  }
+  componentDidMount () {
+    let keys = []
+    let goodList = this.state.shoplists
+    for (let i = 0; i < goodList.length; i++) {
+      keys.push(this.refs['info_index'+i].offsetTop)
+    }
+    this.setState({
+      keys: keys
     })
   }
   select_this (index) {
@@ -78,7 +100,7 @@ class Index extends React.Component{
               return (
                 <div key={index}>
                   <p className="info-title" ref={"info_index"+index}>{item.name}</p>
-                  <Food foodlist = {item.foods}></Food>
+                  <Food foodlist = {item.foods} obj = {this.props.obj} newfoodlist = {this.props.newfoodlist}></Food>
                 </div>
               )
             })
@@ -89,4 +111,27 @@ class Index extends React.Component{
   }
 }
 
-export default Index
+let mathArray = []
+let obj = 1
+let mapStateToProps = (state) => {
+  obj += 1
+  let shopinfo = state.shopinfo
+  if (shopinfo instanceof Array) {
+    for (let i in shopinfo) {
+      mathArray.push(shopinfo[i])
+    }
+  } else {
+    for (let i in mathArray) {
+      if (mathArray[i].name == shopinfo.name) {
+        mathArray[i].math = shopinfo.math
+        break
+      }
+    }
+  }
+  return {
+    newfoodlist: mathArray,
+    obj: obj
+  }
+}
+
+export default connect(mapStateToProps, dispatchAction)(Index)

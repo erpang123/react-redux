@@ -1,6 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
+
 import ShopBtn from './shop-btn'
-import { get_FoodInfo } from '../action/action1'
+import dispatchAction from '../dispatch/dispatchAction'
 
 class Food extends React.Component {
   constructor (props) {
@@ -11,19 +13,24 @@ class Food extends React.Component {
     }
   }
   sendInfo (food) {
-    return () => {
-      let { store } = this.context
-      store.dispatch(get_FoodInfo(food))
-    }
+    this.props.action.get_FoodInfo(food)
   }
   render () {
     return (
       <div>
         {
           this.state.foods.map((food, id) => {
+            let math = 0
+            let newfoodlist = this.props.newfoodlist
+            for (let i in newfoodlist) {
+              if (food.name == newfoodlist[i].name) {
+                math = newfoodlist[i].math
+                break
+              }
+            }
             return (
-              <div key={id} className="info-lists" onClick = {this.sendInfo(food)}>
-                <img src={food.icon}></img>
+              <div key={id} className="info-lists" onClick = {() => this.sendInfo(food)}>
+                <img src={food.icon} />
                 <div>
                   <h6 className="food-name">{food.name}</h6>
                   <div className="rating">
@@ -31,9 +38,9 @@ class Food extends React.Component {
                     <label>好评率{food.rating}%</label>
                   </div>
                   <div className="price">
-                    <a>￥{food.price}</a>
+                    <a>￥{food.price}{food.math}</a>
                     <a className={food.oldPrice =='' ? 'hide' : ''}>￥{food.oldPrice}</a>
-                    <ShopBtn foodName={food.name} foodPrice = {food.price}></ShopBtn>
+                    <ShopBtn foodName={food.name} foodPrice = {food.price} foodMath = {math}></ShopBtn>
                   </div>
                 </div>
               </div>
@@ -45,8 +52,4 @@ class Food extends React.Component {
   }
 }
 
-Food.contextTypes = {
-  store: React.PropTypes.object
-}
-
-export default Food
+export default connect(null, dispatchAction)(Food)

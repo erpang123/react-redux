@@ -1,7 +1,13 @@
 const SET_SHOPMATH = 'SET_SHOPMATH'
 const GET_FOODINFO = 'GET_FOODINFO'
 const SET_SHOPINFO = 'SET_SHOPINFO'
+const SET_BOOLEAN = 'SET_BOOLEAN'
+const SET_DOM = 'SET_DOM'
+const SET_MESSAGE = 'SET_MESSAGE'
 
 export { SET_SHOPMATH }
 export { GET_FOODINFO }
 export { SET_SHOPINFO }
+export { SET_BOOLEAN }
+export { SET_DOM }
+export { SET_MESSAGE }

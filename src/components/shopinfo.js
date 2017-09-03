@@ -1,16 +1,15 @@
 import React from 'react'
-import ReactStar from './reactstar'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as AllAction from '../action/action1'
 
+import ReactStar from './reactstar'
+import dispatchAction from '../dispatch/dispatchAction'
 
 class ShopInfo extends React.Component {
 	constructor (props) {
 		super(props)
 	}
   hide_info () {
-    this.props.actions.setShopInfo({})
+    this.props.action.setShopInfo({})
   }
 	render () {
     if (JSON.stringify(this.props.shopinfo) == '{}') {
@@ -59,10 +58,4 @@ class ShopInfo extends React.Component {
 	}
 }
 
-let mapDispatchToProps = (dispatch) => {
-  return {
-    actions: bindActionCreators(AllAction, dispatch)
-  }
-}
-
-export default connect(null, mapDispatchToProps)(ShopInfo)
+export default connect(null, dispatchAction)(ShopInfo)
