@@ -16,18 +16,11 @@ class Food extends React.Component {
     this.props.action.get_FoodInfo(food)
   }
   render () {
+    let {foods} = this.state
     return (
       <div>
         {
-          this.state.foods.map((food, id) => {
-            let math = 0
-            let newfoodlist = this.props.newfoodlist
-            for (let i in newfoodlist) {
-              if (food.name == newfoodlist[i].name) {
-                math = newfoodlist[i].math
-                break
-              }
-            }
+          foods.map((food, id) => {
             return (
               <div key={id} className="info-lists" onClick = {() => this.sendInfo(food)}>
                 <img src={food.icon} />
@@ -38,9 +31,9 @@ class Food extends React.Component {
                     <label>好评率{food.rating}%</label>
                   </div>
                   <div className="price">
-                    <a>￥{food.price}{food.math}</a>
+                    <a>￥{food.price}</a>
                     <a className={food.oldPrice =='' ? 'hide' : ''}>￥{food.oldPrice}</a>
-                    <ShopBtn foodName={food.name} foodPrice = {food.price} foodMath = {math}></ShopBtn>
+                    <ShopBtn food={food}></ShopBtn>
                   </div>
                 </div>
               </div>

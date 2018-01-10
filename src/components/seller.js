@@ -27,27 +27,24 @@ class Index extends React.Component{
             math: 0,
             price: price
           }
+          data.goods[i].foods[j].math = 0
           cartlist.push(obj)//将产品的名称，个数，价格存储到产品的数组列表中
         }
       }
-      cartlist.all_num = 0
-      cartlist.price = 0
-      this.props.action.setShopMath(cartlist)
       this.setState({
         shoplists: data.goods
+      }, () => {
+        let keys = []
+        let goodList = this.state.shoplists
+        for (let i = 0; i < goodList.length; i++) {
+          keys.push(this.refs['info_index'+i].offsetTop)
+        }
+        this.setState({
+          keys: keys
+        })
       })
     }).catch((error) => {
       console.log(error)
-    })
-  }
-  componentDidMount () {
-    let keys = []
-    let goodList = this.state.shoplists
-    for (let i = 0; i < goodList.length; i++) {
-      keys.push(this.refs['info_index'+i].offsetTop)
-    }
-    this.setState({
-      keys: keys
     })
   }
   select_this (index) {
@@ -79,31 +76,34 @@ class Index extends React.Component{
     }
   }
   render () {
+    let {shoplists, selet} = this.state
     return (
       <div className="page-content">
         <div className="left-nav">
           {
-            this.state.shoplists.map((item, index) => {
+            shoplists && shoplists.length > 0 ? 
+            shoplists.map((item, index) => {
               return (
-                <div onClick={() => this.select_this(index)} className={index == this.state.selet ? 'p-active' : ''} key={index}>
+                <div onClick={() => this.select_this(index)} className={index == selet ? 'p-active' : ''} key={index}>
                   <p>
                     <label>{item.name}</label>
                   </p>
                 </div>
               )
-            })
+            }) : ''
           }
         </div>
         <div className="right-show" ref="scroll_view" onScroll={() => this.scroll_index()}>
           {
-            this.state.shoplists.map((item, index) => {
+            shoplists && shoplists.length > 0 ? 
+            shoplists.map((item, index) => {
               return (
                 <div key={index}>
                   <p className="info-title" ref={"info_index"+index}>{item.name}</p>
-                  <Food foodlist = {item.foods} obj = {this.props.obj} newfoodlist = {this.props.newfoodlist}></Food>
+                  <Food foodlist = {item.foods}></Food>
                 </div>
               )
-            })
+            }) : ''
           }
         </div>
       </div>
@@ -111,27 +111,4 @@ class Index extends React.Component{
   }
 }
 
-let mathArray = []
-let obj = 1
-let mapStateToProps = (state) => {
-  obj += 1
-  let shopinfo = state.shopinfo
-  if (shopinfo instanceof Array) {
-    for (let i in shopinfo) {
-      mathArray.push(shopinfo[i])
-    }
-  } else {
-    for (let i in mathArray) {
-      if (mathArray[i].name == shopinfo.name) {
-        mathArray[i].math = shopinfo.math
-        break
-      }
-    }
-  }
-  return {
-    newfoodlist: mathArray,
-    obj: obj
-  }
-}
-
-export default connect(mapStateToProps, dispatchAction)(Index)
+export default connect(null, dispatchAction)(Index)

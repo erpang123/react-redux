@@ -17,7 +17,7 @@ html,body{
   right:0;
   background:#141d27;
   opacity: 0.6;
-  z-index: 105;
+  z-index: 110;
 }
 .blur{
   filter:blur(3px);
@@ -127,7 +127,7 @@ html,body{
   right: 0;
   bottom: 50px;
   background:#fff;
-  z-index: 108;
+  z-index: 111;
 }
 .shop-cart h5{
   height: 40px;
@@ -643,7 +643,7 @@ small{
   height: 50px;
   width: 100%;
   bottom:0;
-  z-index: 110;
+  z-index: 112;
 }
 .all-price{
   position: absolute;

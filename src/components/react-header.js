@@ -29,6 +29,21 @@ class ReactHeader extends React.Component{
       console.log(error)
     })
   }
+  componentDidMount () {
+    this.moveText()
+  }
+  moveText () {
+    let dom = this.refs.gg_info
+    let left = parseInt(dom.style.marginLeft) || 0
+    left--
+    if (left <= -dom.scrollWidth + 500) {
+      left = 0
+    }
+    dom.style.marginLeft = left + 'px'
+    // setTimeout(() => {
+    //   this.moveText()
+    // }, 50)
+  }
   getNewInfo () {
     let shopinfo = this.state.shopInfo
     this.props.action.setShopInfo(shopinfo)
@@ -48,7 +63,7 @@ class ReactHeader extends React.Component{
           </div>
         </div>
         <div className="gg-info" onClick={() => this.getNewInfo()}>
-          <p><label>{this.state.shopInfo.bulletin}</label></p>
+          <p><label ref='gg_info'>{this.state.shopInfo.bulletin}</label></p>
         </div>
       </div>
     )

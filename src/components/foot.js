@@ -14,27 +14,39 @@ class Footer extends React.Component{
     }
 	}
   shop_cart () {
+    let {allNum} = this.props
     event.preventDefault()
     event.stopPropagation()
-    if (this.props.allNum>0) {
+    if (allNum>0) {
       this.props.action.setBoolean(true)
     }
   }
   render () {
+    let {allNum, allPrice} = this.props
+    let {shipping_fee, send_price} = this.state
     return (
-      <div className={this.props.allNum>0 ? 'shop-foot has-goods' : 'shop-foot'}>
+      <div className={allNum>0 ? 'shop-foot has-goods' : 'shop-foot'}>
         <a className="shop-cart-price" onClick={() => this.shop_cart()}></a>
-        <a className={this.props.allNum>0 ? 'all-price' : 'all-price hide'}>{this.props.allNum}</a>
+        <a className={allNum>0 ? 'all-price' : 'all-price hide'}>{allNum}</a>
         <div className="shop-money">
-          <b className="money">￥{this.props.allPrice}</b>
-          <label>另需配送费￥{this.state.shipping_fee}元</label>
+          <b className="money">￥{allPrice === 0 ? 0 : allPrice + shipping_fee}</b>
+          <label>另需配送费￥{shipping_fee}元</label>
         </div>
-        <div className={this.props.allPrice >= this.state.send_price ? 'pay-money get-pay' : 'pay-money'}>
-          <label>￥{this.state.send_price}起送</label>
+        <div className={allPrice >= send_price ? 'pay-money get-pay' : 'pay-money'}>
+          <label>￥{send_price}起送</label>
         </div>
       </div>
     )
   }
 }
 
-export default connect(null, dispatchAction)(Footer)
+let mapStateToProps = (state) => {
+  let allNum = state.numMath
+  let allPrice = state.sumMath
+  return {
+    allNum: allNum,
+    allPrice: allPrice
+  }
+}
+
+export default connect(mapStateToProps, dispatchAction)(Footer)

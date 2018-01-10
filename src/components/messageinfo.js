@@ -16,15 +16,10 @@ class MessageInfo extends React.Component{
       method: 'get'
     }).then((res) => {
       let datajson = JSON.parse(res.data).ratings
-      var goodMath = 0
-      var badMath = 0
+      let goodMath = 0
+      let badMath = 0
       for (let i in datajson) {
         let _this = datajson[i]
-        if (_this.score >= 3) {
-          goodMath++
-        } else {
-          badMath++
-        }
         let date = new Date(_this.rateTime)
         let year = date.getFullYear()
         let month = date.getMonth() + 1
@@ -45,8 +40,7 @@ class MessageInfo extends React.Component{
         }
         _this.rateTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes
       }
-      let allMath = parseInt(goodMath) + parseInt(badMath)
-      this.props.getMessage(allMath, goodMath, badMath)
+      this.props.getMessage(datajson)
       this.setState({
         admin_info: datajson,
         static_info: datajson
@@ -56,37 +50,30 @@ class MessageInfo extends React.Component{
     })
   }
   componentWillReceiveProps (nextProps) {
-    let goodList = []
-    let badList = []
-    let idx = nextProps.liIndex
-    let idy = nextProps.hasInfo
+    let goodList = []                   //好的评价数据
+    let badList = []                    //坏的评价数据
+    let idx = nextProps.liIndex         //筛选全部，好评，差评的评价
+    let idy = nextProps.hasInfo         //是否有内容的评价
+    let {static_info} = this.state
     if (idx === 0) {
-      this.setState({
-        admin_info: this.state.static_info
-      })
-      this.reload_info(this.state.static_info, idy)
+      this.reload_info(static_info, idy)
     } else if (idx === 1) {
-      for (let i in this.state.static_info) {
-        if (this.state.static_info[i].score >= 3) {
-          goodList.push(this.state.static_info[i])
+      for (let i in static_info) {
+        if (static_info[i].score >= 3) {
+          goodList.push(static_info[i])
         }
       }
-      this.setState({
-        admin_info: goodList
-      })
       this.reload_info(goodList, idy)
     } else if (idx === 2) {
-      for (let i in this.state.static_info) {
-        if (this.state.static_info[i].score < 3) {
-          badList.push(this.state.static_info[i])
+      for (let i in static_info) {
+        if (static_info[i].score < 3) {
+          badList.push(static_info[i])
         }
       }
-      this.setState({
-        admin_info: badList
-      })
       this.reload_info(badList, idy)
     }
   }
+  //筛选是否有内容的评价
   reload_info (obj, bool) {
     let info = []
     if (bool) {
@@ -98,16 +85,21 @@ class MessageInfo extends React.Component{
       this.setState({
         admin_info: info
       })
+    } else {
+      this.setState({
+        admin_info: obj
+      })
     }
   }
 	render () {
+    let {admin_info} = this.state
 		return (
 			<div className="score-info-lists">
         {
-          this.state.admin_info.map((list, index) => {
+          admin_info.map((list, index) => {
             return (
               <div className="score-info-list" key={index}>
-                <img className="admin-img" src={list.avatar}></img>
+                <img className="admin-img" src={list.avatar}/>
                 <div className="admin-score-info">
                   <p className="admin-name">
                     <label>{list.username}</label>

@@ -30,9 +30,9 @@ class MyComponent extends React.Component{
       <div id="main"> 
         <ReactHeader></ReactHeader>
         <ReactContent></ReactContent>
-        <FoodInfo foodinfo={this.props.foodinfo}></FoodInfo>
+        <FoodInfo></FoodInfo>
         <ShopInfo shopinfo={this.props.shopinfo}></ShopInfo>
-        <Footer allNum = {this.props.all_num} allPrice = {this.props.price}></Footer>
+        <Footer></Footer>
         <ShopCart cartshow={this.props.cartshow} goods={this.props.cartlist}></ShopCart>
         <div className={this.props.cartshow ? "black" : 'hide'} onClick={() => this.hideBlack()}></div>
       </div>

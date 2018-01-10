@@ -2,7 +2,7 @@ import { SET_SHOPMATH } from '../action/actiontype'
 
 let foodList = []
 
-const todo = (state = {}, action) => {
+const todo = (state = [], action) => {
 	switch (action.type) {
 		case SET_SHOPMATH:
       		return action.text
