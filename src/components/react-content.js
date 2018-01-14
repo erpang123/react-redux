@@ -1,8 +1,32 @@
 import React from 'react'
-import Seller from './seller'
-import Good from './good'
-import Message from './message'
+import Bundle from '../bundle'
+//同步引入组件
+// import Seller from './seller'
+// import Good from './good'
+
 import { BrowserRouter, Route, Link, NavLink, Redirect } from 'react-router-dom'
+//异步引入组件
+let sellerDom = () => import('./seller' /*webpackChunkName: 'seller'*/)
+let messageDom = () => import('./message' /*webpackChunkName: 'message'*/)
+let goodDom = () => import('./good' /*webpackChunkName: 'good'*/)
+
+const Seller = (props) => (
+  <Bundle load={sellerDom}>
+    {(Seller) => <Seller {...props}/>}
+  </Bundle>
+)
+
+const Message = (props) => (
+  <Bundle load={messageDom}>
+    {(Message) => <Message {...props}/>}
+  </Bundle>
+)
+
+const Good = (props) => (
+  <Bundle load={goodDom}>
+    {(Good) => <Good {...props}/>}
+  </Bundle>
+)
 
 class MyComponent extends React.Component{
   constructor (props) {
