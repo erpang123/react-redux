@@ -1,14 +1,14 @@
 import React from 'react'
 import Bundle from '../bundle'
-//同步引入组件
+// 同步引入组件
 // import Seller from './seller'
 // import Good from './good'
 
-import { BrowserRouter, Route, Link, NavLink, Redirect } from 'react-router-dom'
-//异步引入组件
-let sellerDom = () => import('./seller' /*webpackChunkName: 'seller'*/)
-let messageDom = () => import('./message' /*webpackChunkName: 'message'*/)
-let goodDom = () => import('./good' /*webpackChunkName: 'good'*/)
+import { HashRouter, Route, Link, NavLink, Redirect } from 'react-router-dom'
+// 异步引入组件
+let sellerDom = () => import('./seller' /*webpackChunkName: 'seller' */)
+let messageDom = () => import('./message' /* webpackChunkName: 'message'*/)
+let goodDom = () => import('./good' /* webpackChunkName: 'good'*/)
 
 const Seller = (props) => (
   <Bundle load={sellerDom}>
@@ -28,13 +28,13 @@ const Good = (props) => (
   </Bundle>
 )
 
-class MyComponent extends React.Component{
+class MyComponent extends React.Component {
   constructor (props) {
     super(props)
   }
-	render () {
-    return (
-      <BrowserRouter>
+  render () {
+  return (
+      <HashRouter>
         <div className="app-content">
           <div className="nav">
             <NavLink to="/seller" activeClassName="link-active">商品</NavLink>
@@ -46,9 +46,9 @@ class MyComponent extends React.Component{
           <Route path="/message" component={Message}></Route>
           <Route path="/good" component={Good}></Route>
         </div>
-      </BrowserRouter>
+      </HashRouter>
     )
-  }
+}
 }
 
 export default MyComponent
