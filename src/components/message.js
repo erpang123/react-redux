@@ -3,7 +3,7 @@ import React from 'react'
 import ReactStar from './reactstar'
 import MessageInfo from './messageinfo'
 
-class Message extends React.Component{
+class Message extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -22,11 +22,11 @@ class Message extends React.Component{
         }
       ],
       ratingInfo: [],
-      select_index: 0,            //全部，好评，差评中选中的哪一项
-      all_info: false             //是否显示有内容的数据
+      select_index: 0,            // 全部，好评，差评中选中的哪一项
+      all_info: false             // 是否显示有内容的数据
     }
   }
-  //是否显示有内容的数据
+  // 是否显示有内容的数据
   getAllInfo () {
     let {all_info, ratingInfo} = this.state
     this.setState({
@@ -35,13 +35,13 @@ class Message extends React.Component{
       this.reloadMath(ratingInfo)
     })
   }
-  //设置全部，好评，差评中的一项
+  // 设置全部，好评，差评中的一项
   setIndex (index) {
     this.setState({
       select_index: index
     })
   }
-  //设置全部，好评，差评每个的数据个数
+  // 设置全部，好评，差评每个的数据个数
   getMessage () {
     return (obj) => {
       this.setState({
@@ -50,7 +50,7 @@ class Message extends React.Component{
       this.reloadMath(obj)
     }
   }
-  //根据是否显示有内容的评价重新计算数据个数
+  // 根据是否显示有内容的评价重新计算数据个数
   reloadMath (obj) {
     let static_info = obj
     let goodMath = 0
@@ -128,7 +128,7 @@ class Message extends React.Component{
               })
             }
           </ul>
-          <p className={all_info ? "admin-info-title success-active" : "admin-info-title"} onClick={() => this.getAllInfo()}>只看有内容的评价</p>
+          <p className={all_info ? 'admin-info-title success-active' : 'admin-info-title'} onClick={() => this.getAllInfo()}>只看有内容的评价</p>
           <MessageInfo getMessage = {this.getMessage()} liIndex = {select_index} hasInfo = {all_info}></MessageInfo>
         </div>
       </div>

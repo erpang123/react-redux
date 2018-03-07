@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import dispatchAction from '../dispatch/dispatchAction'
 
-class ShopBtn extends React.Component{
+class ShopBtn extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -13,16 +13,19 @@ class ShopBtn extends React.Component{
   componentWillReceiveProps (nextProps) {
     let {food, shopinfo} = nextProps
     let foodName = food.name
-    for (let i of shopinfo) {
-      if (i.name === foodName) {
+    for (let info of shopinfo) {
+      if (info.name === foodName) {
         this.setState({
-          math: i.math
+          math: info.math
         })
-        break
+        return
       }
     }
+    this.setState({
+      math: 0
+    })
   }
-  code_math (e) {//减少商品
+  code_math (e) { // 减少商品
     let {food, shopinfo, numMath, sumMath} = this.props
     let i_index = 0
     numMath--
@@ -34,7 +37,7 @@ class ShopBtn extends React.Component{
           if (shop.math === 0) {
             shopinfo.splice(i_index, 1)
           }
-          break;
+          break
         }
         i_index++
       }
@@ -44,7 +47,7 @@ class ShopBtn extends React.Component{
     this.props.action.setShopMath(shopinfo)
     e.stopPropagation()
   }
-  add_math (e) {//增加商品
+  add_math (e) { // 增加商品
     let {food, shopinfo, numMath, sumMath} = this.props
     let newInfo = true
     let obj = {
@@ -59,7 +62,7 @@ class ShopBtn extends React.Component{
         if (shop.name === obj.name) {
           shop.math++
           newInfo = false
-          break;
+          break
         }
       }
     }
@@ -72,16 +75,16 @@ class ShopBtn extends React.Component{
     this.props.action.setShopMath(shopinfo)
     e.stopPropagation()
   }
-	render () {
+  render () {
     let {math} = this.state
     return (
       <div className="set-math">
-        <span className={math == 0 ? 'hide' : 'code-btn'} onClick={(e) => this.code_math(e)}></span>
+        <span className={math === 0 ? 'hide' : 'code-btn'} onClick={(e) => this.code_math(e)}></span>
         <label>{math}</label>
         <span className="add-btn" ref='add_btn' onClick={(e) => this.add_math(e)}></span>
       </div>
     )
-	}
+  }
 }
 
 let mapStateToProps = (state) => {

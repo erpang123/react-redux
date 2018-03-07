@@ -27,7 +27,7 @@ class MyComponent extends React.Component{
   }
 	render () {
     return (
-      <div id="main"> 
+      <div id="main">
         <ReactHeader></ReactHeader>
         <ReactContent></ReactContent>
         <FoodInfo></FoodInfo>

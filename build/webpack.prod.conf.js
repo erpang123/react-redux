@@ -9,6 +9,10 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
+Object.keys(baseWebpackConfig.entry).forEach(function (name) {
+  baseWebpackConfig.entry[name] = ['babel-polyfill'].concat(baseWebpackConfig.entry[name])
+})
+
 var env = config.build.env
 
 var webpackConfig = merge(baseWebpackConfig, {
@@ -114,7 +118,10 @@ if (config.build.productionGzip) {
 
 if (config.build.bundleAnalyzerReport) {
   var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-  webpackConfig.plugins.push(new BundleAnalyzerPlugin())
+  webpackConfig.plugins.push(new BundleAnalyzerPlugin({
+    analyzerMode: 'static',
+    reportFilename: `../data/reports/${Date.now()}.html`
+  }))
 }
 
 module.exports = webpackConfig

@@ -1,9 +1,9 @@
 import React from 'react'
 
 class Raing extends React.Component {
-	constructor (props) {
-		super(props)
-	}
+  constructor (props) {
+  super(props)
+}
   render () {
     return (
       <div className="detail-rating">
@@ -18,8 +18,8 @@ class Raing extends React.Component {
                     <img src={info.avatar}/>
                   </p>
                 </div>
-                <div className={info.text != '' ? "detail-rating-info" : "hide"}>
-                  <i className={"info.rateType == 0" ? 'zan' : 'no-zan'}></i>
+                <div className={info.text != '' ? 'detail-rating-info' : 'hide'}>
+                  <i className={'info.rateType == 0' ? 'zan' : 'no-zan'}></i>
                   <p>{info.text}</p>
                 </div>
               </div>

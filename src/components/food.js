@@ -32,7 +32,7 @@ class Food extends React.Component {
                   </div>
                   <div className="price">
                     <a>￥{food.price}</a>
-                    <a className={food.oldPrice =='' ? 'hide' : ''}>￥{food.oldPrice}</a>
+                    <a className={food.oldPrice === '' ? 'hide' : ''}>￥{food.oldPrice}</a>
                     <ShopBtn food={food}></ShopBtn>
                   </div>
                 </div>

@@ -59,28 +59,27 @@ app.use(devMiddleware)
 app.use(hotMiddleware)
 
 // serve pure static assets
-// var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
-// console.log(staticPath)
-// app.use(staticPath, express.static('./static'))
+var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
+app.use(staticPath, express.static('./static'))
 
-var fs=require("fs");
-var bodyParser=require("body-parser");
-var router=express.Router();
-var data_json;
-fs.readFile("goods.json","utf-8",function(error,data){
-  if(error) console.log(error);
-  data_json=data;
-});
+// var fs=require("fs");
+// var bodyParser=require("body-parser");
+// var router=express.Router();
+// var data_json;
+// fs.readFile("goods.json","utf-8",function(error,data){
+//   if(error) console.log(error);
+//   data_json=data;
+// });
 
-router.get('/seller', (req, res) => {
-  res.json(data_json)
-})
+// router.get('/seller', (req, res) => {
+//   res.json(data_json)
+// })
 
-router.get('/message', (req, res) => {
-  res.json(data_json)
-})
+// router.get('/message', (req, res) => {
+//   res.json(data_json)
+// })
 
-app.use('/api', router)
+// app.use('/api', router)
 
 
 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import dispatchAction from '../dispatch/dispatchAction'
 import Food from './food'
 
-class Index extends React.Component{
+class Index extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -15,7 +15,8 @@ class Index extends React.Component{
     }
   }
   componentWillMount () {
-    axios.get('/api/seller').then((res) => {//请求产品的数据列表
+    axios.get('/api/seller').then((res) => {
+      // 请求产品的数据列表
       let data = JSON.parse(res.data)
       let cartlist = []
       for (let i = 0; i < data.goods.length; i++) {
@@ -28,7 +29,7 @@ class Index extends React.Component{
             price: price
           }
           data.goods[i].foods[j].math = 0
-          cartlist.push(obj)//将产品的名称，个数，价格存储到产品的数组列表中
+          cartlist.push(obj)  // 将产品的名称，个数，价格存储到产品的数组列表中
         }
       }
       this.setState({
@@ -37,7 +38,7 @@ class Index extends React.Component{
         let keys = []
         let goodList = this.state.shoplists
         for (let i = 0; i < goodList.length; i++) {
-          keys.push(this.refs['info_index'+i].offsetTop)
+          keys.push(this.refs['info_index' + i].offsetTop)
         }
         this.setState({
           keys: keys
@@ -81,8 +82,7 @@ class Index extends React.Component{
       <div className="page-content">
         <div className="left-nav">
           {
-            shoplists && shoplists.length > 0 ? 
-            shoplists.map((item, index) => {
+            shoplists && shoplists.length > 0 ? shoplists.map((item, index) => {
               return (
                 <div onClick={() => this.select_this(index)} className={index == selet ? 'p-active' : ''} key={index}>
                   <p>
@@ -95,11 +95,10 @@ class Index extends React.Component{
         </div>
         <div className="right-show" ref="scroll_view" onScroll={() => this.scroll_index()}>
           {
-            shoplists && shoplists.length > 0 ? 
-            shoplists.map((item, index) => {
+            shoplists && shoplists.length > 0 ? shoplists.map((item, index) => {
               return (
                 <div key={index}>
-                  <p className="info-title" ref={"info_index"+index}>{item.name}</p>
+                  <p className="info-title" ref={'info_index' + index}>{item.name}</p>
                   <Food foodlist = {item.foods}></Food>
                 </div>
               )

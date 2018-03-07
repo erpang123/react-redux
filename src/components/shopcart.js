@@ -5,15 +5,21 @@ import dispatchAction from '../dispatch/dispatchAction'
 import ShopBtn from './shop-btn'
 
 class ShopCart extends React.Component {
-	constructor (props) {
-		super(props)
+  constructor (props) {
+    super(props)
     this.state = {
-      cart_bool: false,
-      goods: []
-    }
-	}
+    cart_bool: false,
+    goods: []
+  }
+  }
   clear_info () {
-
+    this.props.action.setShopMath([])
+    this.props.action.setAllSum(0)
+    this.props.action.setAllNum(0)
+    this.props.action.setBoolean(false)
+    this.setState({
+      cart_bool: false
+    })
   }
   clearcube () {
     this.setState({
@@ -32,28 +38,28 @@ class ShopCart extends React.Component {
       goods: shops
     })
   }
-	render () {
+  render () {
     let {cartshow} = this.props
     let {goods, cart_bool} = this.state
     if (!cartshow) {
-      return null
-    } else {
-      return (
+    return null
+  } else {
+    return (
         <div className="shop-cart">
           <div className={ cart_bool ? 'shop-cart-alert' : 'hide'}>
             <h6>是否要清空购物车</h6>
             <p>
-              <a onClick={ () => {this.setState({cart_bool: false})}}>取消</a>
+              <a onClick={ () => { this.setState({cart_bool: false}) }}>取消</a>
               <i></i>
               <a onClick={() => this.clear_info()}>确定</a>
             </p>
           </div>
           <h5>
             <label>购物车</label>
-            <a onClick={() => {this.clearcube()}}>清空</a>
+            <a onClick={() => { this.clearcube() }}>清空</a>
           </h5>
-          <div className={goods.length===0 ? "no-shop" : 'hide'}>还未点餐</div>
-          <ul className={goods.length>0 ? '' : 'hide'}>
+          <div className={goods.length === 0 ? 'no-shop' : 'hide'}>还未点餐</div>
+          <ul className={goods.length > 0 ? '' : 'hide'}>
             {
               goods.map((good, index) => {
                 return (
@@ -70,12 +76,14 @@ class ShopCart extends React.Component {
           </ul>
         </div>
       )
-    }
-	}
+  }
+  }
 }
 
 let mapStateToProps = (state) => {
-  let shopinfo = state.shopinfo
+  // 获取购物车列表
+  let shopinfo = Object.assign([], state.shopinfo)
+  // 购物车显示和隐藏
   let cartshow = state.cartshow
   return {
     shopinfo: shopinfo,
