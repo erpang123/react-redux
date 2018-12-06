@@ -81,9 +81,9 @@ app.use(staticPath, express.static('./static'))
 
 // app.use('/api', router)
 
+const ip = require('ip')
 
-
-var uri = 'http://localhost:' + port
+var uri = 'http://' + ip.address() + ':' + port // 'http://localhost:' + port
 
 var _resolve
 var readyPromise = new Promise(resolve => {
