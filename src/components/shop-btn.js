@@ -45,7 +45,6 @@ class ShopBtn extends React.Component {
     this.props.action.setAllSum(sumMath)
     this.props.action.setAllNum(numMath)
     this.props.action.setShopMath(shopinfo)
-    console.log(1231)
     e.stopPropagation()
   }
   add_math (e) { // 增加商品
