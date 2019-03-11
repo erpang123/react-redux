@@ -1,4 +1,4 @@
-var Mock = require('mockjs')
+// var Mock = require('mockjs')
 var good = JSON.stringify(require('./goods.json'))
 
 export const seller = Mock.mock('/api/seller', good)
