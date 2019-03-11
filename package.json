@@ -67,6 +67,7 @@
     "has-ansi": "^3.0.0",
     "html-webpack-plugin": "^2.28.0",
     "http-proxy-middleware": "^0.17.3",
+    "image-webpack-loader": "^4.6.0",
     "inflight": "^1.0.6",
     "inherits": "^2.0.3",
     "ip": "^1.1.5",

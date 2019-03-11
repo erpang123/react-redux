@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactMain from './components/react-main'
 import createStore from './store/createStore'

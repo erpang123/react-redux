@@ -31,13 +31,28 @@ module.exports = {
           presets: ['es2015', 'react']
         }
       },
+      // {
+      //   test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+      //   loader: 'url-loader',
+      //   options: {
+      //     limit: 10000,
+      //     name: utils.assetsPath('img/[name].[hash:7].[ext]')
+      //   }
+      // },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: utils.assetsPath('img/[name].[hash:7].[ext]')
-        }
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+                  limit: 10000,
+                  name: utils.assetsPath('img/[name].[hash:7].[ext]'),
+            }
+          },
+          {
+                loader: 'image-webpack-loader'
+          }
+        ]
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
