@@ -214,6 +214,7 @@ html,body{
   padding:10px;
   box-sizing: border-box;
   border-radius: 50%;
+  z-index: 101;
 }
 .detail-info{
   position: fixed;
